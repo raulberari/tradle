@@ -7,6 +7,7 @@ export interface StatsData {
   played: number;
   winRatio: number;
   guessDistribution: Record<1 | 2 | 3 | 4 | 5 | 6, number>;
+  averageBestDistance: number;
 }
 
 export function getStatsData(): StatsData {
@@ -27,7 +28,9 @@ export function getStatsData(): StatsData {
   let currentStreak = 0;
   let maxStreak = 0;
   let previousDate: DateTime | undefined;
+  let bestDistanceSum = 0;
   for (const [dayString, guesses] of allGuessesEntries) {
+    bestDistanceSum += Math.min(...guesses.map((guess) => guess.distance));
     const currentDate = DateTime.fromFormat(dayString, "yyyy-MM-dd");
     const winIndex = guesses.findIndex((guess) => guess.distance === 0);
     const won = winIndex >= 0;
@@ -63,5 +66,6 @@ export function getStatsData(): StatsData {
     played,
     winRatio: winCount / played,
     guessDistribution: guessDistribution,
+    averageBestDistance: bestDistanceSum / played,
   };
 }

@@ -23,6 +23,9 @@ const resources = {
         noImageMode: "Hide country image for more of a challenge.",
         rotationMode: "Randomly rotate country image.",
       },
+      stats: {
+        title: "Statistics",
+      },
       buyMeACoffee: "Buy me a ☕!",
     },
   },
@@ -45,6 +48,9 @@ const resources = {
         startingNextDay: "A partir du lendemain !",
         noImageMode: "Cache l'image du pays pour plus de challenge.",
         rotationMode: "Tourne l'image du pays de manière aléatoire.",
+      },
+      stats: {
+        title: "Statistiques",
       },
       buyMeACoffee: "Offrez moi un ☕ !",
     },
