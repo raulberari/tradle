@@ -1,29 +1,43 @@
-import { useMemo } from "react";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
 import { countriesWithImage, Country } from "../domain/countries";
 
-const forcedCountries: Record<string, string> = {
-  "2022-02-02": "TD",
-  "2022-02-03": "PY",
+const getCountry = async (dateSring: string) => {
+  const date = new Date(dateSring);
+  return await axios
+    .get<string>(
+      `http://localhost:3001/api/country?date=${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`
+    )
+    .then((res) => res.data)
+    .then((data) => data);
 };
 
 export function useCountry(dayString: string): [Country, number, number] {
+  const [forcedCountryCode, setForcedCountryCode] = useState("");
+  useEffect(() => {
+    async function fetchData() {
+      const code = await getCountry(dayString);
+      setForcedCountryCode(code);
+    }
+    fetchData();
+  });
   const country = useMemo(() => {
-    const forcedCountryCode = forcedCountries[dayString];
     const forcedCountry =
-      forcedCountryCode != null
+      forcedCountryCode !== ""
         ? countriesWithImage.find(
-            (country) => country.code === forcedCountryCode
+            (country) => country.code === forcedCountryCode.toUpperCase()
           )
         : undefined;
-
     return (
       forcedCountry ??
       countriesWithImage.reverse()[
         Math.floor(seedrandom.alea(dayString)() * countriesWithImage.length)
       ]
     );
-  }, [dayString]);
+  }, [forcedCountryCode, dayString]);
 
   const randomAngle = useMemo(
     () => seedrandom.alea(dayString)() * 360,
