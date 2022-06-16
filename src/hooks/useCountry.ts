@@ -3,23 +3,47 @@ import { useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
 import { countriesWithImage, Country } from "../domain/countries";
 
-const getCountry = async (dateSring: string) => {
-  const date = new Date(dateSring);
+function isNumeric(value: string) {
+  return /^-?\d+$/.test(value);
+}
+function csvJSON(csv: string, delimiter = "\t") {
+  const lines = csv.replace(/\r/g, "").split("\n");
+  const result = [];
+  const headers = lines[0].split(delimiter);
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i]) continue;
+    const obj: any = {};
+    const currentline: any = lines[i].split(delimiter);
+    for (let j = 0; j < headers.length; j++)
+      obj[headers[j]] = isNumeric(currentline[j])
+        ? currentline[j] * 1
+        : currentline[j];
+
+    result.push(obj);
+  }
+  return result;
+}
+
+const getCountry = async (dayString: string) => {
+  const date = new Date(dayString);
+  const currDate = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
   return await axios
-    .get<string>(
-      `http://localhost:3001/api/country?date=${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}`
-    )
-    .then((res) => res.data)
-    .then((data) => data);
+    .get("data.csv")
+    .then((res) => csvJSON(res.data, ","))
+    .then((data) => {
+      return data
+        .filter((el) => el["date"] === currDate)[0]
+        .country.toUpperCase();
+    });
 };
 
 export function useCountry(dayString: string): [Country, number, number] {
   const [forcedCountryCode, setForcedCountryCode] = useState("");
   useEffect(() => {
     async function fetchData() {
-      const code = await getCountry(dayString);
+      const code = await getCountry(dayString.replace("tradle.", ""));
       setForcedCountryCode(code);
     }
     fetchData();
@@ -28,7 +52,7 @@ export function useCountry(dayString: string): [Country, number, number] {
     const forcedCountry =
       forcedCountryCode !== ""
         ? countriesWithImage.find(
-            (country) => country.code === forcedCountryCode.toUpperCase()
+            (country) => country.code === forcedCountryCode
           )
         : undefined;
     return (
