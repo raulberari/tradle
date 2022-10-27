@@ -13,6 +13,9 @@ import {
   sanitizeCountryName,
   countryISOMapping,
   fictionalCountries,
+  Country,
+  get3CharCode,
+  getOecCountryCode,
 } from "../domain/countries";
 import { useGuesses } from "../hooks/useGuesses";
 import { CountryInput } from "./CountryInput";
@@ -24,6 +27,7 @@ import { SettingsData } from "../hooks/useSettings";
 import { useMode } from "../hooks/useMode";
 import { useCountry } from "../hooks/useCountry";
 import axios from "axios";
+import { TreeMap } from "./TreeMap";
 
 function getDayString() {
   return DateTime.now().toFormat("yyyy-M-dd");
@@ -47,6 +51,7 @@ export function Game({ settingsData }: GameProps) {
 
   if (isAprilFools) {
     country = {
+      continent: "",
       code: "AJ",
       latitude: 42.546245,
       longitude: 1.601554,
@@ -54,6 +59,7 @@ export function Game({ settingsData }: GameProps) {
     };
   }
 
+  const [tradeData, setTradeData] = useState(null);
   const [ipData, setIpData] = useState(null);
   const [won, setWon] = useState(false);
   const [currentGuess, setCurrentGuess] = useState<string>("");
@@ -114,6 +120,12 @@ export function Game({ settingsData }: GameProps) {
     [addGuess, country, currentGuess, i18n.resolvedLanguage, t, isAprilFools]
   );
 
+  const getData = async (oecCountryCode: string) => {
+    // `https://oec.world/olap-proxy/data.jsonrecords?Exporter+Country=${oecCountryCode}&Year=2020&cube=trade_i_baci_a_92&drilldowns=HS4&measures=Trade+Value&parents=true`
+    const { data } = await axios.get("/tradle/data");
+    setTradeData(data);
+  };
+
   useEffect(() => {
     const getIpData = async () => {
       const res = await axios.get("https://geolocation-db.com/json/");
@@ -148,15 +160,22 @@ export function Game({ settingsData }: GameProps) {
     }
   }, [guesses, ipData, won, country]);
 
+  useEffect(() => {
+    const oecCountryCode = getOecCountryCode(country);
+    if (oecCountryCode) {
+      getData(oecCountryCode);
+    }
+  }, [country]);
+
   let iframeSrc = "https://oec.world/en/tradle/aprilfools.html";
   let oecLink = "https://oec.world/";
-  const country3LetterCode = country?.code
-    ? countryISOMapping[country.code].toLowerCase()
-    : "";
+  const country3LetterCode = get3CharCode(country);
   if (!isAprilFools) {
     iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2020/?controls=false&title=false&click=false`;
     oecLink = `https://oec.world/en/profile/country/${country3LetterCode}`;
   }
+
+  console.log("DATA!", tradeData);
 
   return (
     <div className="flex-grow flex flex-col mx-2 relative">
@@ -171,7 +190,7 @@ export function Game({ settingsData }: GameProps) {
       )}
       {/* <div className="my-1 mx-auto"> */}
       <h2 className="font-bold text-center">
-        Guess which country exports these products!
+        Guess which US State exports these products!
       </h2>
       <div
         style={{
@@ -181,22 +200,7 @@ export function Game({ settingsData }: GameProps) {
           height: 0,
         }}
       >
-        {country3LetterCode ? (
-          <iframe
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-            title="Country to guess"
-            width="390"
-            height="315"
-            src={iframeSrc}
-            frameBorder="0"
-          />
-        ) : null}
+        {tradeData ? <TreeMap tradeData={tradeData} /> : <div>Loading...</div>}
       </div>
       {rotationMode && !hideImageMode && !gameEnded && (
         <button

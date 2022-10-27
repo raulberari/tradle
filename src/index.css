@@ -25,3 +25,66 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.d3plus-tooltip {
+  min-width: 250px;
+  z-index: 101 !important;
+  border: 1px solid #d6d6d6 !important;
+}
+.d3plus-tooltip table {
+  min-width: 95% !important;
+  width: 95% !important;
+  margin: 10px auto !important;
+}
+.d3plus-tooltip tbody {
+  width: 100% !important;
+}
+.d3plus-tooltip tbody tr {
+  border-top: 1px solid #d6d6d6 !important;
+}
+.d3plus-tooltip tbody tr:first-child {
+  border-top: 0 !important;
+}
+.d3plus-tooltip tbody td,
+.d3plus-tooltip tbody th {
+  text-align: right;
+  padding: 5px 5px;
+}
+.d3plus-tooltip tbody td:first-child,
+.d3plus-tooltip tbody th:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.d3plus-tooltip thead tr {
+  border-top: 0 !important;
+}
+.d3plus-tooltip th {
+  white-space: nowrap;
+}
+
+.d3plus-tooltip-title-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+.d3plus-tooltip-title-wrapper .icon {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+.d3plus-tooltip-title-wrapper .icon img {
+  width: 40px;
+  height: 40px;
+}
+.d3plus-tooltip-title-wrapper .title {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+.d3plus-tooltip-title-wrapper .title span {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}

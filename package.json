@@ -1,6 +1,6 @@
 {
   "name": "tradle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@mantine/core": "^3.6.9",
@@ -14,6 +14,7 @@
     "axios": "^0.27.2",
     "country-emoji": "^1.5.6",
     "d3-fetch": "^3.0.1",
+    "d3plus-react": "^1.2.1",
     "geolib": "^3.3.3",
     "i18next": "^21.6.7",
     "i18next-browser-languagedetector": "^6.1.2",
@@ -54,6 +55,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:3300",
   "devDependencies": {
     "@types/d3-fetch": "^3.0.1",
     "@types/luxon": "^2.0.9",
