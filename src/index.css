@@ -88,3 +88,13 @@ code {
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
+
+.autocomplete-flag {
+  width: 32px;
+}
+
+.guess-row-flag {
+  display: inline-block;
+  width: 25px;
+  vertical-align: top;
+}

@@ -3,9 +3,11 @@ import {
   countries,
   fictionalCountries,
   sanitizeCountryName,
+  usaStates,
+  flag,
 } from "../domain/countries";
 import { Group, Text, Autocomplete } from "@mantine/core";
-import { flag } from "country-emoji";
+// import { flag } from "country-emoji";
 
 interface CountryInputProps {
   setCountryValue: Dispatch<SetStateAction<string>>;
@@ -24,7 +26,9 @@ const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ id, value, isAprilFools = false, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
       <Group noWrap>
-        <Text>{flag(id)}</Text>
+        <Text>
+          <img alt="" src={flag(id)} className="autocomplete-flag" />
+        </Text>
         <div>
           <Text>{value}</Text>
         </div>
@@ -58,7 +62,7 @@ export function CountryInput({
         value: `${country.name}`,
         id: country.code,
       }))
-    : countries.map((country) => ({
+    : usaStates.map((country) => ({
         name: country.name,
         value: `${country.name}`,
         id: country.code,

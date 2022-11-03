@@ -14,8 +14,8 @@ import {
   countryISOMapping,
   fictionalCountries,
   Country,
-  get3CharCode,
   getOecCountryCode,
+  usaStates,
 } from "../domain/countries";
 import { useGuesses } from "../hooks/useGuesses";
 import { CountryInput } from "./CountryInput";
@@ -88,13 +88,15 @@ export function Game({ settingsData }: GameProps) {
         const res = await axios.get("https://geolocation-db.com/json/");
         setIpData(res.data);
       };
-      const items = isAprilFools ? fictionalCountries : countries;
-      const guessedCountry = items.find(
-        (country) =>
+      const items = isAprilFools ? fictionalCountries : usaStates;
+
+      const guessedCountry = items.find((country) => {
+        return (
           sanitizeCountryName(
             getCountryName(i18n.resolvedLanguage, country)
           ) === sanitizeCountryName(currentGuess)
-      );
+        );
+      });
 
       if (guessedCountry == null) {
         toast.error(t("unknownCountry"));
@@ -119,12 +121,6 @@ export function Game({ settingsData }: GameProps) {
     },
     [addGuess, country, currentGuess, i18n.resolvedLanguage, t, isAprilFools]
   );
-
-  const getData = async (oecCountryCode: string) => {
-    // `https://oec.world/olap-proxy/data.jsonrecords?Exporter+Country=${oecCountryCode}&Year=2020&cube=trade_i_baci_a_92&drilldowns=HS4&measures=Trade+Value&parents=true`
-    const { data } = await axios.get("/tradle/data");
-    setTradeData(data);
-  };
 
   useEffect(() => {
     const getIpData = async () => {
@@ -161,21 +157,30 @@ export function Game({ settingsData }: GameProps) {
   }, [guesses, ipData, won, country]);
 
   useEffect(() => {
-    const oecCountryCode = getOecCountryCode(country);
-    if (oecCountryCode) {
-      getData(oecCountryCode);
+    // const oecCountryCode = getOecCountryCode(country);
+    // if (oecCountryCode) {
+    //   getData(oecCountryCode);
+    // }
+    //
+    // const todaysLocation = getLocation();
+    const getData = async (oecCountryCode: string) => {
+      // `https://oec.world/olap-proxy/data.jsonrecords?Exporter+Country=${oecCountryCode}&Year=2020&cube=trade_i_baci_a_92&drilldowns=HS4&measures=Trade+Value&parents=true`
+      const { data } = await axios.get(`/tradle/data?date=${dayString}`);
+      setTradeData(data);
+    };
+    const todaysLocation = country?.code;
+    if (todaysLocation) {
+      getData(todaysLocation);
     }
-  }, [country]);
+  }, [country, dayString]);
 
-  let iframeSrc = "https://oec.world/en/tradle/aprilfools.html";
-  let oecLink = "https://oec.world/";
-  const country3LetterCode = get3CharCode(country);
-  if (!isAprilFools) {
-    iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2020/?controls=false&title=false&click=false`;
-    oecLink = `https://oec.world/en/profile/country/${country3LetterCode}`;
-  }
-
-  console.log("DATA!", tradeData);
+  // let iframeSrc = "https://oec.world/en/tradle/aprilfools.html";
+  const oecLink = "https://oec.world/";
+  // const country3LetterCode = get3CharCode(country);
+  // if (!isAprilFools) {
+  //   iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2020/?controls=false&title=false&click=false`;
+  //   oecLink = `https://oec.world/en/profile/country/${country3LetterCode}`;
+  // }
 
   return (
     <div className="flex-grow flex flex-col mx-2 relative">
@@ -188,7 +193,6 @@ export function Game({ settingsData }: GameProps) {
           {t("showCountry")}
         </button>
       )}
-      {/* <div className="my-1 mx-auto"> */}
       <h2 className="font-bold text-center">
         Guess which US State exports these products!
       </h2>

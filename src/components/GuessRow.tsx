@@ -130,9 +130,12 @@ export function GuessRow({
                 : "bg-gray-200 rounded-lg flex items-center h-8 col-span-3 animate-reveal pl-2"
             }
           >
-            <p className="text-ellipsis overflow-hidden whitespace-nowrap">
-              {getCountryPrettyName(guess?.name, isAprilFools)}
-            </p>
+            <p
+              className="text-ellipsis overflow-hidden whitespace-nowrap"
+              dangerouslySetInnerHTML={{
+                __html: getCountryPrettyName(guess?.name, isAprilFools),
+              }}
+            ></p>
           </div>
           <div
             className={

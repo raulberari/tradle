@@ -1,4 +1,7 @@
-const MAX_DISTANCE_ON_EARTH = 20_000_000;
+// const MAX_DISTANCE_ON_EARTH = 20_000_000;
+// this is in meters NOT km
+// US value only based on: https://en.wikipedia.org/wiki/List_of_extreme_points_of_the_United_States#:~:text=Greatest%20distance%20between%20any%20two,of%20West%20Quoddy%20Head%2C%20Maine.
+const MAX_DISTANCE_ON_EARTH = 9_000_000;
 
 export type Direction =
   | "S"
