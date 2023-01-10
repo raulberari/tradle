@@ -46,7 +46,7 @@ export function Share({
       : "";
     const title = isAprilFools
       ? `#Tradle #AprilFoolsDay #${dayCount} ${guessCount}/6${difficultyModifierEmoji}`
-      : `#Tradle #${dayCount} ${guessCount}/6${difficultyModifierEmoji}`;
+      : `#Tradle (🇺🇸 Edition) #${dayCount} ${guessCount}/6${difficultyModifierEmoji}`;
 
     const guessString = guesses
       .map((guess) => {

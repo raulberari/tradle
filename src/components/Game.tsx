@@ -198,10 +198,11 @@ export function Game({ settingsData }: GameProps) {
       </h2>
       <div
         style={{
-          position: "relative",
-          paddingBottom: "70%",
-          paddingTop: "25px",
-          height: 0,
+          alignItems: "center",
+          display: "flex",
+          height: 315,
+          justifyContent: "center",
+          width: "100%",
         }}
       >
         {tradeData ? <TreeMap tradeData={tradeData} /> : <div>Loading...</div>}

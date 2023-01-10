@@ -17,6 +17,13 @@ export function useCountry(dayString: string): [Country | undefined] {
         return { location: d.location, date: d.date };
       }
     ).then((data) => {
+      console.log(
+        data.length
+          ? (
+              data.find((el) => el.date === dayString) as DateCountry
+            )?.location.toUpperCase() || ""
+          : ""
+      );
       setForcedCountryCode(
         data.length
           ? (

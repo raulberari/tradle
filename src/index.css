@@ -26,6 +26,10 @@ code {
     monospace;
 }
 
+.viz {
+  width: 100%;
+}
+
 .d3plus-tooltip {
   min-width: 250px;
   z-index: 101 !important;

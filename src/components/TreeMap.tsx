@@ -100,10 +100,14 @@ export function TreeMap({ tradeData }: TreeMapProps) {
   return (
     <Treemap
       config={{
+        total: (d: any) => d["Trade Value"],
+        totalFormat: (d: any) => "Total: $" + formatAbbreviate(d),
+        totalConfig: {
+          fontSize: 16,
+        },
         aggs: {
           "Section ID": (arr: any[]) => arr[0]["Section ID"],
         },
-        height: "315",
         data: tradeData.data,
         legend: (config: any, arr: any[]) => arr.length > 1,
         legendConfig: {
