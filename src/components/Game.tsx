@@ -158,7 +158,7 @@ export function Game({ settingsData }: GameProps) {
   let oecLink = "https://oec.world/";
   if (!isAprilFools) {
     const country3LetterCode = countryISOMapping[country.code].toLowerCase();
-    iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2020/?controls=false&title=false&click=false`;
+    iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2022/?controls=false&title=false&click=false`;
     oecLink = `https://oec.world/en/profile/country/${country3LetterCode}`;
   }
 
