@@ -25,8 +25,21 @@ import { useMode } from "../hooks/useMode";
 import { useCountry } from "../hooks/useCountry";
 import axios from "axios";
 
+function getRandomDate(start: Date, end: Date): Date {
+  const startTimestamp = start.getTime();
+  const endTimestamp = end.getTime();
+  const randomTimestamp =
+    startTimestamp + Math.random() * (endTimestamp - startTimestamp);
+  return new Date(randomTimestamp);
+}
+
 function getDayString() {
-  return DateTime.now().toFormat("yyyy-MM-dd");
+  const startDate = new Date("2023-01-01");
+  const endDate = new Date("2024-12-31");
+
+  const randomDate = getRandomDate(startDate, endDate);
+
+  return DateTime.now().toFormat(randomDate.toString());
 }
 
 const MAX_TRY_COUNT = 6;
