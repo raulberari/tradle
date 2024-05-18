@@ -67,7 +67,7 @@ function App() {
         className="flex justify-center flex-auto relative"
         // style={{ background: "linear-gradient(#2c5363,#0f2027)" }}
       >
-        <div className="w-full max-w-lg flex flex-col relative z-10 bg-white bg-opacity-75 md:bg-transparent">
+        <div className="w-full max-w-[80%] flex flex-col">
           <header className="border-b-2 px-3 border-gray-200 flex justify-between">
             <button
               className="mr-3 text-xl"

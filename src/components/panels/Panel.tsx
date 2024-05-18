@@ -23,7 +23,7 @@ export function Panel({ title, isOpen, close, children }: PanelProps) {
       ariaHideApp={false}
       style={{ overlay: { zIndex: 100 } }}
     >
-      <div className="w-full max-w-lg bg-white text-sm overflow-auto px-2">
+      <div className="w-full bg-white text-sm overflow-auto px-2">
         <header className="border-b-2 border-gray-200 mb-3 flex">
           <h2
             className="text-2xl font-bold uppercase tracking-wide text-center my-1 flex-auto"
