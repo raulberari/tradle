@@ -141,9 +141,6 @@ function App() {
             </a>
           </footer>
         </div>
-        <div className="absolute bottom-0 right-0 z-0">
-          <img src="images/bottom-ship.png" alt="logo" width="342" />
-        </div>
       </div>
     </>
   );
