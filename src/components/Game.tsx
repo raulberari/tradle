@@ -33,6 +33,14 @@ function getRandomDate(start: Date, end: Date): Date {
   return new Date(randomTimestamp);
 }
 
+function getRandomDate(start: Date, end: Date): Date {
+  const startTimestamp = start.getTime();
+  const endTimestamp = end.getTime();
+  const randomTimestamp =
+    startTimestamp + Math.random() * (endTimestamp - startTimestamp);
+  return new Date(randomTimestamp);
+}
+
 function getDayString() {
   const startDate = new Date("2023-01-01");
   const endDate = new Date("2024-12-31");
@@ -178,10 +186,8 @@ export function Game({ settingsData }: GameProps) {
     ? countryISOMapping[country.code].toLowerCase()
     : "";
   if (!isAprilFools) {
-    const oecCode = country?.oecCode
-      ? country?.oecCode?.toLowerCase()
-      : country3LetterCode;
-    iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${oecCode}/all/show/2022/?controls=false&title=false&click=false`;
+    const country3LetterCode = countryISOMapping[country.code].toLowerCase();
+    iframeSrc = `https://oec.world/en/visualize/embed/tree_map/hs92/export/${country3LetterCode}/all/show/2022/?controls=false&title=false&click=false`;
     oecLink = `https://oec.world/en/profile/country/${country3LetterCode}`;
   }
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "https://raulberari.github.io/tradle/",
   "private": true,
+  "homepage": "https://raulberari.github.io/tradle/",
   "dependencies": {
     "@mantine/core": "^3.6.9",
     "@mantine/hooks": "^3.6.9",
