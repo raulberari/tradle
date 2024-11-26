@@ -1,16 +1,17 @@
-import { ToastContainer, Flip } from "react-toastify";
+import { initFrameAndPoll } from "@newswire/frames";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Game } from "./components/Game";
-import React, { useEffect, useState } from "react";
 import { Infos } from "./components/panels/Infos";
-import { useTranslation } from "react-i18next";
 import { InfosFr } from "./components/panels/InfosFr";
 import { Settings } from "./components/panels/Settings";
-import { useSettings } from "./hooks/useSettings";
 import { Stats } from "./components/panels/Stats";
+import { useSettings } from "./hooks/useSettings";
 
 function App() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const [infoOpen, setInfoOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -19,6 +20,9 @@ function App() {
   const [settingsData, updateSettings] = useSettings();
 
   useEffect(() => {
+    if (typeof document !== "undefined") {
+      initFrameAndPoll(); // Iframe poll height
+    }
     if (settingsData.theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -132,12 +136,12 @@ function App() {
           <Game settingsData={settingsData} />
           <footer className="flex justify-center text-sm mt-8 mb-1">
             <a
-              className="underline pl-1"
-              href="https://oec.world"
+              className="text-center underline pl-1 bg-yellow-200 px-1 rounded"
+              href="https://oecworld.threadless.com/mens/t-shirt/regular"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {t("buyMeACoffee")}
+              Buy Tradle Merch! 👕
             </a>
           </footer>
         </div>

@@ -1,20 +1,22 @@
 {
   "name": "tradle",
   "version": "0.1.0",
+  "homepage": "https://raulberari.github.io/tradle/",
   "private": true,
   "homepage": "https://raulberari.github.io/tradle/",
   "dependencies": {
     "@mantine/core": "^3.6.9",
     "@mantine/hooks": "^3.6.9",
+    "@newswire/frames": "^1.0.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.0",
-    "@types/node": "^16.11.19",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "country-emoji": "^1.5.6",
+    "d3-fetch": "^3.0.1",
     "geolib": "^3.3.3",
     "i18next": "^21.6.7",
     "i18next-browser-languagedetector": "^6.1.2",
@@ -58,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@types/d3-fetch": "^3.0.1",
     "@types/luxon": "^2.0.9",
     "@types/react-autosuggest": "^10.1.5",
     "@types/react-copy-to-clipboard": "^5.0.2",
